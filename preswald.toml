@@ -3,7 +3,7 @@ title = "Preswald Project"
 version = "0.1.0"
 port = 8501
 slug = "preswald-project"  
-entrypoint = "hello.py"    
+entrypoint = "testingLabels.py"    
 
 [branding]
 name = "Preswald Project"
