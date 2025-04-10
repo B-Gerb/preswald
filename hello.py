@@ -1,13 +1,15 @@
 from preswald import text, plotly, connect, get_df, table, query, slider
+from preswald import selectbox
+
 import plotly.express as px
 
-from sklearn.svm import SVC
-from sklearn.preprocessing import StandardScaler
-from sklearn.feature_selection import RFE
-from sklearn.pipeline import Pipeline
+# from sklearn.svm import SVC
+# from sklearn.preprocessing import StandardScaler
+# from sklearn.feature_selection import RFE
+# from sklearn.pipeline import Pipeline
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
 text("# Welcome to Preswald!")
 text("This is your first app. 🎉")
 # Load the CSV
@@ -60,6 +62,13 @@ features = [
     'ROUNDNESS', 'COMPACTNESS', 'SHAPEFACTOR_1', 'SHAPEFACTOR_2', 
     'SHAPEFACTOR_3', 'SHAPEFACTOR_4'
 ]
+"""
+features = [
+    'AREA', 'PERIMETER', 'MAJOR_AXIS', 'MINOR_AXIS', 'ECCENTRICITY', 
+    'EQDIASQ', 'SOLIDITY', 'CONVEX_AREA', 'EXTENT', 'ASPECT_RATIO', 
+    'ROUNDNESS', 'COMPACTNESS', 'SHAPEFACTOR_1', 'SHAPEFACTOR_2', 
+    'SHAPEFACTOR_3', 'SHAPEFACTOR_4'
+]
 X = df[features]
 y = df['Class']
 
@@ -85,3 +94,36 @@ fig4.update_layout(
     showlegend=False
 )
 plotly(fig4)
+"""
+
+# Using selectbox
+text("choice one")
+choiceOne = selectbox(
+    label="Choose variable",
+    options = features,
+    default = None
+
+)
+
+ChoiceTwo = selectbox(
+    label="Choose variable two",
+    options = features[:-1],
+    default = features[0]
+)
+
+
+ChoiceTwo = features[0]
+
+if(choiceOne and ChoiceTwo):
+    text("## Selected Features")
+    plt.figure()
+    plt.title("Feature Importance")
+    plt.xlabel(f"Feature - {choiceOne} ")
+    plt.ylabel(f"Feature - {ChoiceTwo} ")
+    plt.scatter(df[choiceOne], df[ChoiceTwo], c=df['Class'].astype('category').cat.codes, cmap='viridis', alpha=0.5)
+    plt.show()
+else:
+    text("Please select two features to view them.")
+
+
+
